@@ -4,6 +4,7 @@ import 'windi.css';
 import router from './router';
 import * as axios from 'axios';
 import VueKeyCloak from '@dsb-norge/vue-keycloak-js';
+import store from './store'
 
 Vue.config.productionTip = false;
 
@@ -35,7 +36,8 @@ Vue.use(VueKeyCloak, {
     new Vue({
       el: '#app',
       router,
-      render: (h) => h(App),
+      store,
+      render: (h) => h(App)
     });
   },
 });
