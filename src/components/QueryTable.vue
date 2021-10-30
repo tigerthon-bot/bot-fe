@@ -29,7 +29,11 @@
             </thead>
             <tbody>
               <!-- Odd row -->
-              <tr class="bg-white">
+              <tr
+                v-for="(query, index) of activeQueries"
+                :key="query._id"
+                :class="[index % 2 === 0 ? 'bg-white' : 'bg-gray-50']"
+              >
                 <td
                   class="
                     px-6
@@ -40,7 +44,7 @@
                     text-gray-900
                   "
                 >
-                  Jane Cooper
+                  {{ query.term }}
                 </td>
                 <td
                   class="
@@ -51,42 +55,14 @@
                     font-medium
                   "
                 >
-                  <button href="#" class="text-red-600 hover:text-red-900">
+                  <button
+                    class="text-red-600 hover:text-red-900"
+                    @click="$emit('removeQuery', { id: query._id })"
+                  >
                     Remove
                   </button>
                 </td>
               </tr>
-
-              <!-- Even row -->
-              <tr class="bg-gray-50">
-                <td
-                  class="
-                    px-6
-                    py-4
-                    whitespace-nowrap
-                    text-sm
-                    font-medium
-                    text-gray-900
-                  "
-                >
-                  Cody Fisher
-                </td>
-                <td
-                  class="
-                    px-6
-                    py-4
-                    whitespace-nowrap
-                    text-right text-sm
-                    font-medium
-                  "
-                >
-                  <button href="#" class="text-red-600 hover:text-red-900">
-                    Remove
-                  </button>
-                </td>
-              </tr>
-
-              <!-- More people... -->
             </tbody>
           </table>
         </div>
@@ -97,5 +73,8 @@
 <script>
 export default {
   name: 'QueryTable',
+  props: {
+    activeQueries: { type: Array, reqired: true },
+  },
 };
 </script>

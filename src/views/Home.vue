@@ -14,6 +14,7 @@
             <div class="w-full flex mb-4 mt-4">
               <label for="query" class="sr-only">Add Query</label>
               <input
+                v-model="newQueryValue"
                 type="text"
                 name="query"
                 id="query"
@@ -48,13 +49,17 @@
                   focus:ring-offset-2
                   focus:ring-indigo-500
                 "
+                @click="addQuery"
               >
                 Add
               </button>
             </div>
           </div>
 
-          <QueryTable />
+          <QueryTable
+            :active-queries="activeQueries"
+            @removeQuery="removeQuery"
+          />
         </div>
       </main>
     </MainLayout>
@@ -64,6 +69,7 @@
 <script>
 import MainLayout from '@/layouts/MainLayout';
 import QueryTable from '@/components/QueryTable';
+import { addQuery, getAllQueries, removeQuery } from '@/api/queries';
 
 export default {
   name: 'Home',
@@ -72,8 +78,34 @@ export default {
     QueryTable,
   },
   data() {
-    return {};
+    return {
+      activeQueries: [],
+      newQueryValue: '',
+    };
   },
-  created() {},
+  created() {
+    this.updateQueries();
+  },
+  methods: {
+    async addQuery() {
+      if (this.newQueryValue.length > 0) {
+        console.log('add query');
+        await addQuery({ term: this.newQueryValue });
+
+        this.newQueryValue = '';
+
+        this.updateQueries();
+      }
+    },
+    async updateQueries() {
+      const { data } = await getAllQueries();
+      this.activeQueries = data;
+    },
+    async removeQuery(target) {
+      await removeQuery(target.id);
+
+      this.updateQueries();
+    },
+  },
 };
 </script>
