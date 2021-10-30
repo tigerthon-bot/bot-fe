@@ -21,11 +21,13 @@ function tokenInterceptor() {
   );
 }
 
+const { VUE_APP_CLIENT_ID } = process.env;
+
 Vue.use(VueKeyCloak, {
   config: {
     realm: 'tigerthon',
     url: 'http://auth.tigerthon-bot.com/auth',
-    clientId: 'dev',
+    clientId: VUE_APP_CLIENT_ID,
   },
   onReady: () => {
     tokenInterceptor();
