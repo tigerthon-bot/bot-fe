@@ -6,18 +6,20 @@
       </div>
     </header>
     <main>
-      <div class="max-w-7xl mx-auto sm:px-6 lg:px-8"></div>
+      <div class="max-w-7xl mx-auto"><leads-table /></div>
     </main>
   </MainLayout>
 </template>
 
 <script>
 import MainLayout from '@/layouts/MainLayout';
+import LeadsTable from '../components/LeadsTable.vue';
 
 export default {
   name: 'Leads',
   components: {
     MainLayout,
+    LeadsTable,
   },
   data() {
     return {};
